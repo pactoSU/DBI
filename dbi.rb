@@ -5,15 +5,18 @@ include DICOM
 include Mongo
 
 class DBI
-  def self.getAll(dicomTable, sort = "")
+  def self.insert(collection, doc)
+    collection.insert(doc)
+  end
+  def self.getAll(collection, sort = "")
     puts "Retrieving all..."
-    dicomTable.find()
+    collection.find.each { |doc| puts doc.inspect }
   end
-  def self.getID(dicomTable, id)
+  def self.getID(collection, id)
     puts "Retrieving record ##{id}..."
-    dicomTable.find( { _id: { } })
+    collection.find( { _id: { } })
   end
-  def self.get(dicomTable, id = "", author = "", date = "", patient = "", sort = "")
+  def self.get(collection, id = "", author = "", date = "", patient = "", sort = "")
     puts "Searching with selected parameters..."
   end
 end
@@ -23,5 +26,6 @@ MONGO_PORT = 27017
 DB_NAME = "dicom"
 DICOM_TABLE_NAME = "dicomCollection"
 
-db = MongoClient.new(MONGO_SERVER, MONGO_PORT).db(DB_NAME)
-dicomTable = db[DICOM_TABLE_NAME]
+
+# db = MongoClient.new(MONGO_SERVER, MONGO_PORT).db(DB_NAME)
+# collection = db[DICOM_TABLE_NAME]
